@@ -1,0 +1,19 @@
+<div>
+    <mat-form-field>
+        <input matInput placeholder="Nombres" [(ngModel)]="producto.nombre">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Marca" [(ngModel)]="producto.marca">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Stock" [(ngModel)]="producto.stock">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="PrecioUnit" [(ngModel)]="producto.precioUnitario" max="15" maxlength="15" type="number">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Deescripcion" [(ngModel)]="producto.descripcion">
+    </mat-form-field>
+</div>
+<button mat-raised-button color="primary" (click)="operar()">Aceptar</button>
+<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>
