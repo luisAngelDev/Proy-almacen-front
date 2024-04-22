@@ -35,7 +35,7 @@ export class ProductoDialogoComponent implements OnInit{
         this.productoService.setProductoCambio(data);
         this.productoService.setMensajeCambio('SE MODIFICO');
       });
-    }
+    }//   REGISTRAR
     else{
       this.productoService.registrar(this.producto).pipe(switchMap( () => {
         return this.productoService.listar();

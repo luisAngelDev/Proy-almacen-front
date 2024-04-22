@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs';
 })
 export class ProductoComponent implements OnInit {
 
-  displayedColumns = ['idproducto', 'nombre','marca', 'stock', 'preciounitario', 'descripcion', 'acciones'];
+  displayedColumns = ['idproducto', 'nombre','marca', 'stock', 'precioUnitario', 'descripcion', 'acciones'];
   dataSource: MatTableDataSource<Producto>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
