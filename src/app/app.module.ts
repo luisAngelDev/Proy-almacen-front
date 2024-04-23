@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClienteEdicionComponent } from './pages/cliente/cliente-edicion/cliente-edicion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductoDialogoComponent } from './pages/producto/producto-dialogo/producto-dialogo.component';
+import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
+import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehiculo-edicion.component';
 
 
 
@@ -20,7 +22,9 @@ import { ProductoDialogoComponent } from './pages/producto/producto-dialogo/prod
     ClienteComponent,
     ProductoComponent,
     ClienteEdicionComponent,
-    ProductoDialogoComponent
+    ProductoDialogoComponent,
+    VehiculoComponent,
+    VehiculoEdicionComponent
   ],
   imports: [
     BrowserModule,
