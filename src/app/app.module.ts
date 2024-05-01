@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductoDialogoComponent } from './pages/producto/producto-dialogo/producto-dialogo.component';
 import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
 import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehiculo-edicion.component';
+import { VentaComponent } from './pages/venta/venta.component';
 
 
 
@@ -24,7 +25,8 @@ import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehi
     ClienteEdicionComponent,
     ProductoDialogoComponent,
     VehiculoComponent,
-    VehiculoEdicionComponent
+    VehiculoEdicionComponent,
+    VentaComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import {MatSidenavModule } from '@angular/material/sidenav';
 import {MatMenuModule } from '@angular/material/menu';
 import {MatDividerModule } from '@angular/material/divider';
 
+
 import {MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule } from '@angular/material/input';
@@ -25,6 +26,8 @@ import {MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatCardModule } from '@angular/material/card';
 import {MatGridListModule } from '@angular/material/grid-list';
 import {MatTabsModule } from '@angular/material/tabs';
+import { CustomDateAdapter } from './custom-adapter';
+
 
 @NgModule({
   declarations: [],
@@ -59,7 +62,8 @@ import {MatTabsModule } from '@angular/material/tabs';
     MatTabsModule
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: DateAdapter, useClass: CustomDateAdapter }
   ]
 })
 export class MaterialModule { }

@@ -19,7 +19,7 @@ export class VehiculoEdicionComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clienteService: VehiculoService
+    private vehiculoService: VehiculoService
   ){}
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class VehiculoEdicionComponent implements OnInit{
 
   initForm(){
     if(this.edicion){
-      this.clienteService.listarPorId(this.id).subscribe(data =>{
+      this.vehiculoService.listarPorId(this.id).subscribe(data =>{
         this.form = new FormGroup({
           'id': new FormControl(data.idVehiculo),
           'nombres': new FormControl(data.nombre),
@@ -66,19 +66,19 @@ export class VehiculoEdicionComponent implements OnInit{
     if(this.edicion){
       //modificar
       //FORMA IDEAL
-      this.clienteService.modificar(vehiculo).pipe(switchMap( () => {
-        return this.clienteService.listar();
+      this.vehiculoService.modificar(vehiculo).pipe(switchMap( () => {
+        return this.vehiculoService.listar();
       }))
       .subscribe(data => {
-        this.clienteService.setVehiculoCambio(data);
-          this.clienteService.setMensajeCambio('SE MODIFICO')
+        this.vehiculoService.setVehiculoCambio(data);
+          this.vehiculoService.setMensajeCambio('SE MODIFICO')
       });
     }else{
       //registrar
-      this.clienteService.registrar(vehiculo).subscribe(()=>{
-        this.clienteService.listar().subscribe(data => {
-          this.clienteService.setVehiculoCambio(data);
-          this.clienteService.setMensajeCambio('SE REGISTRO');
+      this.vehiculoService.registrar(vehiculo).subscribe(()=>{
+        this.vehiculoService.listar().subscribe(data => {
+          this.vehiculoService.setVehiculoCambio(data);
+          this.vehiculoService.setMensajeCambio('SE REGISTRO');
         })
       });
     }

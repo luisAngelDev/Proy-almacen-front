@@ -5,6 +5,7 @@ import { ProductoComponent } from './pages/producto/producto.component';
 import { ClienteEdicionComponent } from './pages/cliente/cliente-edicion/cliente-edicion.component';
 import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
 import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehiculo-edicion.component';
+import { VentaComponent } from './pages/venta/venta.component';
 
 const routes: Routes = [
   { 
@@ -19,7 +20,8 @@ const routes: Routes = [
       {path: 'edicion/:id', component: VehiculoEdicionComponent }
     ]
   },
-  { path: 'pages/producto', component: ProductoComponent }
+  { path: 'pages/producto', component: ProductoComponent },
+  { path: 'pages/venta', component: VentaComponent }
 ];
 
 @NgModule({
