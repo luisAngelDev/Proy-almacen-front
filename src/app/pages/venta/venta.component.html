@@ -37,8 +37,8 @@
 
 <div class="example-container">
     <mat-form-field>
-        <mat-select placeholder="selecciona productos" [(ngModel)]="idProductoSeleccionado">
-            <mat-option *ngFor="let p of (productos$ | async)" [value]="p.idProducto">
+        <mat-select placeholder="selecciona productos" [(ngModel)]="ProductoSeleccionado">
+            <mat-option *ngFor="let p of (productos$ | async)" [value]="p">
                 {{p.nombre}} {{p.marca}}
             </mat-option>
         </mat-select>
@@ -64,34 +64,39 @@
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- <ng-container matColumnDef="item">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.idCliente}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Item</th>
+        <td mat-cell *matCellDef="let item"> {{i + 1}} </td>
     </ng-container> -->
 
     <ng-container matColumnDef="producto">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
         <td mat-cell *matCellDef="let element"> {{element.producto.idProducto}} </td>
     </ng-container>
 
-    <!-- <ng-container matColumnDef="PrecioUnitario">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
-        <td mat-cell *matCellDef="let element"> {{p.producto.precioUnitario}} </td>
-    </ng-container> -->
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.producto.nombre}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="precioUnitario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Unitario </th>
+        <td mat-cell *matCellDef="let element"> {{element.producto.precioUnitario}} </td>
+    </ng-container>
 
     <ng-container matColumnDef="cantidad">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
         <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
     </ng-container>
 
     <ng-container matColumnDef="subTotal">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Total </th>
         <td mat-cell *matCellDef="let element"> {{element.subTotal}} </td>
     </ng-container>
 
     <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let element">
-            <button mat-button color="primary">
+            <button mat-button color="primary" (click)="removerProducto(element.producto.idProducto)">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>

@@ -36,13 +36,13 @@ export class VentaComponent implements OnInit {
 
   idVehiculoSeleccionado: number;
   idClienteSeleccionado: number;
-  idProductoSeleccionado: number;
+  ProductoSeleccionado: Producto;
   fechaSeleccionada: Date = new Date();
 
   detalleVenta: DetalleVenta[] = [];
 
   dataSource: MatTableDataSource<DetalleVenta>;
-  displayedColumns: string[] = ['producto', 'cantidad', 'subTotal', 'acciones']
+  displayedColumns: string[] = ['producto', 'nombre', 'precioUnitario', 'cantidad', 'subTotal', 'acciones']
 
   constructor(
     private vehiculoService: VehiculoService,
@@ -76,24 +76,61 @@ export class VentaComponent implements OnInit {
   }
 
   agregar(){
+    
     let prod = new Producto()
-    prod.idProducto = this.idProductoSeleccionado;
+    prod = this.ProductoSeleccionado;
+
+    let subTotalFinal = prod.precioUnitario * this.cantidad;
 
     let det = new DetalleVenta();
     det.producto = prod;
     det.cantidad = this.cantidad;
-    det.subTotal = this.subTotal;
+    det.subTotal = subTotalFinal;
+   
 
     this.detalleVenta.push(det);
+    this.dataSource = new MatTableDataSource(this.detalleVenta);
+
     this.snackBar.open("SE AGREGO PRODUCTO", "AVISO", {duration: 2000});
 
-    this.dataSource = new MatTableDataSource(this.detalleVenta);
 
     console.log(det);
   }
 
-  eliminar(){
+  removerProducto(index: number) {
 
+    //encuentro la posicion del producto seleccionado y borro de la lista el objeto de esa posicion
+    if (index > 0) {
+
+      console.log(index)
+      let position = 0;
+      for (let i = 0; i < this.detalleVenta.length; i++) {
+        let detalleVenta = this.detalleVenta[i];
+        if (detalleVenta.producto.idProducto === index) {
+          
+          position = i;
+          break;
+        }
+      }
+      this.detalleVenta.splice(position, 1);
+
+      position = 0;
+      this.snackBar.open("SE BORRO EL PRODUCTO", "AVISO", {duration: 2000});
+
+      this.dataSource = new MatTableDataSource(this.detalleVenta);
+      console.log(this.detalleVenta);
+
+    }
+
+  }
+
+  sumarDetalleSubTotal(){
+
+    let acumulador = 0;
+      for (let i = 0; i < this.detalleVenta.length; i++) {
+          acumulador = acumulador + this.detalleVenta[i].subTotal;
+      }
+    this.precioTotal = acumulador;
   }
 
   aceptar(){
@@ -113,6 +150,7 @@ export class VentaComponent implements OnInit {
     let venta = new Venta();
     venta.vehiculo = vehiculo;
     venta.cliente = cliente;
+    this.sumarDetalleSubTotal();
     venta.precioTotal = this.precioTotal;
     venta.fecha = moment(this.fechaSeleccionada).format('YYYY-MM-DDTHH:mm:ss');
     venta.detalleVenta = this.detalleVenta;
@@ -133,11 +171,12 @@ export class VentaComponent implements OnInit {
 
   limpiarControles(){
     this.detalleVenta = [];
+    this.dataSource = new MatTableDataSource(this.detalleVenta);
     this.subTotal = null;
     this.precioTotal = null;
     this.cantidad = null;
     this.idClienteSeleccionado = 0;
-    this.idProductoSeleccionado = 0;
+    this.ProductoSeleccionado = null;
     this.idVehiculoSeleccionado = 0;
     this.fechaSeleccionada = new Date();
     this.fechaSeleccionada.setHours(0);
@@ -150,9 +189,7 @@ export class VentaComponent implements OnInit {
 
   }
 
-  removerDiagnostico(index: number) {
-    this.detalleVenta.splice(index, 1);
-  }
+  
 
 }
 
