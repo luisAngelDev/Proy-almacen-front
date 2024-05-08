@@ -1,5 +1,8 @@
-import { Component, OnInit} from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable, map } from 'rxjs';
 import { Cliente } from 'src/app/_model/cliente';
 import { DetalleVenta } from 'src/app/_model/detalleVenta';
 import { Producto } from 'src/app/_model/producto';
@@ -11,21 +14,24 @@ import { VehiculoService } from 'src/app/_service/vehiculo.service';
 import { VentaService } from 'src/app/_service/venta.service';
 import * as moment from 'moment';
 import { VentaDetPlantillaDTO } from 'src/app/dto/ventaDetPlantillaDTO';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-venta',
-  templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css']
+  selector: 'app-venta-autocomplete',
+  templateUrl: './venta-autocomplete.component.html',
+  styleUrls: ['./venta-autocomplete.component.css']
 })
-export class VentaComponent implements OnInit {
+export class VentaAutocompleteComponent {
 
+  form: FormGroup;
 
-  //vehiculos: Vehiculo[];
-  vehiculos$: Observable<Vehiculo[]>;
-  clientes$: Observable<Cliente[]>;
-  productos$: Observable<Producto[]>;
+  vehiculos: Vehiculo[];
+  clientes: Cliente[];
+  productos: Producto[];
+
+  //se usa en el autocomplete
+  myControlCliente: FormControl = new FormControl();
+
+  clientesFiltrados$: Observable<Cliente[]>;
 
   maxFecha: Date = new Date();
 
@@ -33,9 +39,10 @@ export class VentaComponent implements OnInit {
   cantidad: number;
   subTotal: number;
 
-  idVehiculoSeleccionado: number;
-  idClienteSeleccionado: number;
+  vehiculoSeleccionado: Vehiculo;
+  clienteSeleccionado: Cliente;
   ProductoSeleccionado: Producto;
+
   fechaSeleccionada: Date = new Date();
 
   detalleVenta: DetalleVenta[] = [];
@@ -52,26 +59,58 @@ export class VentaComponent implements OnInit {
   ){ }
 
   ngOnInit(): void{
-    this.listarVehiculos();
+
+    this.form = new FormGroup({
+      'vehiculo': new FormControl(),
+      'cliente': this.myControlCliente,
+      //'precioTotal': new FormControl(),
+      'fecha': new FormControl(new Date()),
+      'productos': new FormControl(),
+      'cantidad': new FormControl()
+    });
+
+    this.listarInicial();
+
+    this.clientesFiltrados$ = this.myControlCliente.valueChanges.pipe(map(val => this.filtrarClientes(val)));
+
+    /* this.listarVehiculos();
     this.listarClientes();
-    this.listarProductos();
+    this.listarProductos(); */
 
     //this.dataSource = new MatTableDataSource(this.detalleVenta);
   }
 
-  listarVehiculos(){
-    // this.vehiculoService.listar().subscribe(data => {
-    //   this.vehiculos = data;
-    // });
-    this.vehiculos$ = this.vehiculoService.listar();
+  filtrarClientes(val: any) {
+    if (val != null && val.idCliente > 0) {
+      return this.clientes.filter(el =>
+        el.nombre.toLowerCase().includes(val.nombre.toLowerCase()) || el.apellido.toLowerCase().includes(val.apellido.toLowerCase()) || el.dni.includes(val.dni)
+      );
+    }
+    return this.clientes.filter(el =>
+      el.nombre.toLowerCase().includes(val?.toLowerCase()) || el.apellido.toLowerCase().includes(val?.toLowerCase()) || el.dni.includes(val)
+    );
   }
 
-  listarClientes(){
-    this.clientes$ = this.clienteService.listar();
+  mostrarCliente(val: any) {
+    return val ? `${val.nombre} ${val.apellido}` : val;
   }
 
-  listarProductos(){
-    this.productos$ = this.productoService.listar();
+
+
+  listarInicial(){
+
+    this.vehiculoService.listar().subscribe(data => {
+      this.vehiculos = data;
+    });
+
+    this.clienteService.listar().subscribe(data => {
+      this.clientes = data;
+    });
+
+    this.productoService.listar().subscribe(data => {
+      this.productos = data;
+    });
+
   }
 
   agregar(){
@@ -123,7 +162,6 @@ export class VentaComponent implements OnInit {
 
   }
 
-  //suma todos los subtotales de una lista para obtener la suma total de una venta.
   sumarDetalleSubTotal(){
 
     let acumulador = 0;
@@ -133,25 +171,42 @@ export class VentaComponent implements OnInit {
     this.precioTotal = acumulador;
   }
 
-  aceptar(){// 
-    let vehiculo = new Vehiculo();
-    vehiculo.idVehiculo = this.idVehiculoSeleccionado;
+  aceptar(){
+    // let vehiculo = new Vehiculo();
+    // vehiculo.idVehiculo = this.idVehiculoSeleccionado;
 
-    let cliente = new Cliente();
-    cliente.idCliente = this.idClienteSeleccionado;
+    // let cliente = new Cliente();
+    // cliente.idCliente = this.idClienteSeleccionado;
 
+    //let producto = new Producto();
+    //producto.idProducto = this.idProductoSeleccionado;
+
+    //let precioTotal = 10000;
+
+ //let fecha = this.fechaSeleccionada;
+
+console.log("haciendo click boton");
     let venta = new Venta();
-    venta.vehiculo = vehiculo;
-    venta.cliente = cliente;
+    venta.vehiculo = this.form.value['vehiculo'];
     this.sumarDetalleSubTotal();
     venta.precioTotal = this.precioTotal;
-    venta.fecha = moment(this.fechaSeleccionada).format('YYYY-MM-DDTHH:mm:ss');
+
+console.log("antes de cliente");
+    venta.cliente = this.form.value['cliente'];
+    //venta.cliente.idCliente = 1;
+    
+    venta.fecha = moment(this.form.value['fecha']).format('YYYY-MM-DDTHH:mm:ss');
+    
     venta.detalleVenta = this.detalleVenta;
 
+console.log("sin dto");
+console.log(venta);
     let dto: VentaDetPlantillaDTO = new VentaDetPlantillaDTO();
     dto.venta = venta;
 
 console.log(venta);
+
+
     this.ventaService.registrarTransaccion(dto).subscribe(()=>{
       this.snackBar.open("SE REGISTRO LA VENTA", "AVISO", {duration: 2000});
 
@@ -168,16 +223,14 @@ console.log(venta);
     this.subTotal = null;
     this.precioTotal = null;
     this.cantidad = null;
-    this.idClienteSeleccionado = 0;
+    this.clienteSeleccionado = null;
     this.ProductoSeleccionado = null;
-    this.idVehiculoSeleccionado = 0;
+    this.vehiculoSeleccionado = null;
     this.fechaSeleccionada = new Date();
     this.fechaSeleccionada.setHours(0);
     this.fechaSeleccionada.setMinutes(0);
     this.fechaSeleccionada.setSeconds(0);
     this.fechaSeleccionada.setMilliseconds(0);
   }
-
-  
 
 }

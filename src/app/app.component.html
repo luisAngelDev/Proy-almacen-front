@@ -54,6 +54,11 @@
               <span>Venta</span>
           </button>
           <mat-divider></mat-divider>
+          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/pages/venta-autocomplete" style="cursor: pointer">
+            <mat-icon>star_rate</mat-icon>
+            <span>Venta-autocomplete</span>
+        </button>
+          <mat-divider></mat-divider>
           <button mat-menu-item (click)="sidenav.toggle()" routerLink="/pages/reporte" style="cursor: pointer">
               <mat-icon>assessment</mat-icon>
               <span>Reportes</span>

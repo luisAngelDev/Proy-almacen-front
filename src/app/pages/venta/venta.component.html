@@ -22,9 +22,9 @@
     </mat-form-field>
 </div>
 
-<mat-form-field>
+<!-- <mat-form-field>
     <input matInput placeholder="Precio Total" [(ngModel)]="precioTotal">
-</mat-form-field>
+</mat-form-field> -->
 
 <mat-form-field class="example-container">
     <input matInput [matDatepicker]="picker" placeholder="Escoger una fecha dd/mm/yyyy" 
@@ -51,9 +51,9 @@
 
 
 
-<mat-form-field>
+<!-- <mat-form-field>
     <input matInput placeholder="sub Total" [(ngModel)]="subTotal">
-</mat-form-field>
+</mat-form-field> -->
 
 <button mat-raised-button color="primary" (click)="agregar()">Agregar Producto</button>
 
@@ -62,11 +62,6 @@
 
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-    <!-- <ng-container matColumnDef="item">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Item</th>
-        <td mat-cell *matCellDef="let item"> {{i + 1}} </td>
-    </ng-container> -->
 
     <ng-container matColumnDef="producto">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>

@@ -14,6 +14,9 @@ import { ProductoDialogoComponent } from './pages/producto/producto-dialogo/prod
 import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
 import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehiculo-edicion.component';
 import { VentaComponent } from './pages/venta/venta.component';
+import { VentaAutocompleteComponent } from './pages/venta-autocomplete/venta-autocomplete.component';
+import { BuscarComponent } from './pages/buscar/buscar.component';
+import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dialogo.component';
 
 
 
@@ -26,7 +29,10 @@ import { VentaComponent } from './pages/venta/venta.component';
     ProductoDialogoComponent,
     VehiculoComponent,
     VehiculoEdicionComponent,
-    VentaComponent
+    VentaComponent,
+    VentaAutocompleteComponent,
+    BuscarComponent,
+    BuscarDialogoComponent
   ],
   imports: [
     BrowserModule,
