@@ -28,4 +28,8 @@ export class VentaService {
     return this.http.post<Venta[]>(`${this.url}/buscar/otros`, filtroConsulta);
   }
 
+  listarResumen(){
+    return this.http.get<any[]>(`${this.url}/listarResumen`);
+  }
+
 }

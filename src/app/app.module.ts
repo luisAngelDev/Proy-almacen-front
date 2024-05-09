@@ -17,6 +17,7 @@ import { VentaComponent } from './pages/venta/venta.component';
 import { VentaAutocompleteComponent } from './pages/venta-autocomplete/venta-autocomplete.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
 import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dialogo.component';
+import { ReporteComponent } from './pages/reporte/reporte.component';
 
 
 
@@ -32,7 +33,8 @@ import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dia
     VentaComponent,
     VentaAutocompleteComponent,
     BuscarComponent,
-    BuscarDialogoComponent
+    BuscarDialogoComponent,
+    ReporteComponent
   ],
   imports: [
     BrowserModule,

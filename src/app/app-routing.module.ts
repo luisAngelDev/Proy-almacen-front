@@ -8,6 +8,7 @@ import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehi
 import { VentaComponent } from './pages/venta/venta.component';
 import { VentaAutocompleteComponent } from './pages/venta-autocomplete/venta-autocomplete.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
+import { ReporteComponent } from './pages/reporte/reporte.component';
 
 const routes: Routes = [
   { 
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'pages/producto', component: ProductoComponent },
   { path: 'pages/venta', component: VentaComponent },
   { path: 'pages/venta-autocomplete', component: VentaAutocompleteComponent },
-  { path: 'pages/buscar', component: BuscarComponent }
+  { path: 'pages/buscar', component: BuscarComponent },
+  { path: 'pages/reporte', component: ReporteComponent }
 ];
 
 @NgModule({
