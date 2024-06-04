@@ -1,4 +1,4 @@
-export class FiltroConsultaDTO{
+export class FiltroVentaDTO{
 
     constructor(public dni: string, public nombreCompleto: string){}
 

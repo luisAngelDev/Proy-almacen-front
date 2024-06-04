@@ -9,6 +9,7 @@ import { Chart } from 'chart.js';
 })
 export class ReporteComponent implements OnInit {
   
+  pdfSrc: any;
   chart: any;
   tipo: string = 'bar';
 
@@ -18,6 +19,8 @@ export class ReporteComponent implements OnInit {
 
   ngOnInit(): void {
     this.dibujar();
+
+
   }
 
   cambiar(tipo: string){
@@ -75,6 +78,32 @@ export class ReporteComponent implements OnInit {
 
     });
 
+  }
+
+  verReporte(){
+    this.ventaService.generarReporte().subscribe(data => {
+
+      //this.pdfSrc = window.URL.createObjectURL(data);
+
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+      reader.readAsArrayBuffer(data);
+    });
+
+  }
+
+  descargarReporte(){
+    this.ventaService.generarReporte().subscribe(data => {
+      const url = window.URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = 'archivo.pdf'
+      a.click();
+    } );
   }
 
 }

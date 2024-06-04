@@ -8,3 +8,8 @@
 <div [hidden]="!chart">
     <canvas id="canvas">{{chart}}</canvas>
 </div> 
+
+<button mat-button color="primary" (click)="verReporte()" >ver PDF</button>
+<button mat-button color="primary" (click)="descargarReporte()" >descargar PDF</button>
+
+<pdf-viewer *ngIf="pdfSrc" [src]="pdfSrc" [render-text]="true" style="width: 800px; height: 800px"></pdf-viewer>

@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Venta } from 'src/app/_model/venta';
 import { VentaService } from 'src/app/_service/venta.service';
-import { FiltroConsultaDTO } from 'src/app/dto/filtroConsultaDTO';
+import { FiltroVentaDTO } from 'src/app/dto/filtroVentaDTO';
 import { BuscarDialogoComponent } from './buscar-dialogo/buscar-dialogo.component';
 import * as moment from 'moment';
 
@@ -46,7 +46,7 @@ export class BuscarComponent implements OnInit {
       let dni = this.form.value['dni'];
       let nombreCompleto = this.form.value['nombreCompleto'];
 
-      let filtro = new FiltroConsultaDTO(dni, nombreCompleto.toLowerCase());
+      let filtro = new FiltroVentaDTO(dni, nombreCompleto.toLowerCase());
 
       if (filtro.dni.length === 0){
         delete filtro.dni;

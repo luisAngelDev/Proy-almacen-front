@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+
 import { ClienteComponent } from './pages/cliente/cliente.component';
 import { ProductoComponent } from './pages/producto/producto.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +19,7 @@ import { VentaAutocompleteComponent } from './pages/venta-autocomplete/venta-aut
 import { BuscarComponent } from './pages/buscar/buscar.component';
 import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dialogo.component';
 import { ReporteComponent } from './pages/reporte/reporte.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -43,7 +45,8 @@ import { ReporteComponent } from './pages/reporte/reporte.component';
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule, //Formularios
-    FormsModule //Two Way Binding,
+    FormsModule, //Two Way Binding,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
