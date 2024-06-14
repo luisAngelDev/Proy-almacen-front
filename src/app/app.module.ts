@@ -6,47 +6,56 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 
-import { ClienteComponent } from './pages/cliente/cliente.component';
-import { ProductoComponent } from './pages/producto/producto.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ClienteEdicionComponent } from './pages/cliente/cliente-edicion/cliente-edicion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProductoDialogoComponent } from './pages/producto/producto-dialogo/producto-dialogo.component';
-import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
-import { VehiculoEdicionComponent } from './pages/vehiculo/vehiculo-edicion/vehiculo-edicion.component';
-import { VentaComponent } from './pages/venta/venta.component';
-import { VentaAutocompleteComponent } from './pages/venta-autocomplete/venta-autocomplete.component';
-import { BuscarComponent } from './pages/buscar/buscar.component';
-import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dialogo.component';
-import { ReporteComponent } from './pages/reporte/reporte.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LoginComponent } from './pages/login/login.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuContent, MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 
-
+//instalar npm i @auth0/angular-jwt --save
+export function tokenGetter() {
+  return sessionStorage.getItem(environment.TOKEN_NAME);
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent,
-    ProductoComponent,
-    ClienteEdicionComponent,
-    ProductoDialogoComponent,
-    VehiculoComponent,
-    VehiculoEdicionComponent,
-    VentaComponent,
-    VentaAutocompleteComponent,
-    BuscarComponent,
-    BuscarDialogoComponent,
-    ReporteComponent
+    LoginComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    AppRoutingModule, // esto levanta luego del appmodule
     BrowserAnimationsModule,
-    MaterialModule,
     HttpClientModule,
     ReactiveFormsModule, //Formularios
     FormsModule, //Two Way Binding,
-    PdfViewerModule
+    //FlexLayoutModule,
+    PdfViewerModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatSnackBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [environment.HOST.substring(7)],
+        disallowedRoutes: [`${environment.HOST}/login/enviarCorreo`]
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
